@@ -1,7 +1,21 @@
 ---
 on: [push]
+
+env:
+  ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'PRODUCTION' || 'STAGING' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, World"
+      - run: |
+        echo ${{ env.ENVIRONMENT }}
+        echo ${{ github.ref }}
+  test:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    - run: echo ${{ env.ENVIRONMENT }}
+  test:
+    needs: [ build, test ]
+    runs-on: ubuntu-latest
+    - run: echo ${{ env.ENVIRONMENT }}
