@@ -14,8 +14,10 @@ jobs:
   test:
     needs: [ build ]
     runs-on: ubuntu-latest
-    - run: echo ${{ env.ENVIRONMENT }}
+    steps:
+      - run: echo ${{ env.ENVIRONMENT }}
   test:
     needs: [ build, test ]
     runs-on: ubuntu-latest
-    - run: echo ${{ env.ENVIRONMENT }}
+    steps:
+      - run: echo ${{ env.ENVIRONMENT }}
