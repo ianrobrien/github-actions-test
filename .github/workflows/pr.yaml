@@ -7,32 +7,29 @@ on:
 
 env:
   ENVIRONMENT: ${{ startsWith(github.ref, 'refs/tags/prod') && 'PRODUCTION' || 'STAGING' }}
-  PRODUCTION_BUILD: ${{ startsWith(github.ref, 'refs/tags/prod') }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Echo variables
         run: |
-          echo ${{ env.PRODUCTION_BUILD }}
           echo ${{ env.ENVIRONMENT }}
           echo ${{ github.ref }}
   test:
-    needs: [ build ]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Echo variables
         run: |
           echo $ENVIRONMENT
   deploy:
-    needs: [ build, test ]
+    needs: [build, test]
     runs-on: ubuntu-latest
-    if: ${{ env.PRODUCTION_BUILD == true }}
+    if: ${{ startsWith(github.ref, 'refs/tags/prod') }}
     steps:
-      - name: Echo variables
+      - name: Echo variables        
         run: |
-          echo ${{ env.PRODUCTION_BUILD }}
+          echo ${{ startsWith(github.ref, 'refs/tags/prod') }}
           echo "This is a production build"
           echo ${{ env.ENVIRONMENT }}
         env:
