@@ -19,9 +19,13 @@ jobs:
   test:
     needs: [ build ]
     runs-on: ubuntu-latest
+    env:
+      SCOPED_ENVIRONMENT: ${{ env.ENVIRONMENT }}
     steps:
       - name: Echo variables
-        run: echo ${{ env.ENVIRONMENT }}
+        run: |
+          echo ${{ env.ENVIRONMENT }}
+          echo "SCOPED_ENVIRONMENT: ${{ env.SCOPED_ENVIRONMENT }}"
   deploy:
     needs: [ build, test ]
     runs-on: ubuntu-latest
