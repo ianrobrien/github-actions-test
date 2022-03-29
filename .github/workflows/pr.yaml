@@ -20,15 +20,19 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     env:
-      SCOPED_ENVIRONMENT: $ENVIRONMENT
+      JOB_SCOPED_ENVIRONMENT: ${ENVIRONMENT}
     steps:
       - name: Echo variables
         run: |
           echo $ENVIRONMENT
-          echo "SCOPED_ENVIRONMENT: $SCOPED_ENVIRONMENT"
+          echo "JOB_SCOPED_ENVIRONMENT: $JOB_SCOPED_ENVIRONMENT"
   deploy:
     needs: [ build, test ]
     runs-on: ubuntu-latest
     steps:
       - name: Echo variables
-        run: echo ${{ env.ENVIRONMENT }}
+        run: |
+          echo ${{ env.ENVIRONMENT }}
+          echo "STEP_SCOPED_ENVIRONMENT: $STEP_SCOPED_ENVIRONMENT"
+        env:
+          STEP_SCOPED_ENVIRONMENT: ${{ env.ENVIRONMENT }}
