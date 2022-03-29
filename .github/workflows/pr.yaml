@@ -1,4 +1,3 @@
----
 on: [push]
 
 env:
@@ -8,16 +7,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        echo ${{ env.ENVIRONMENT }}
-        echo ${{ github.ref }}
+      - name: Echo variables
+        run: |
+          echo ${{ env.ENVIRONMENT }}
+          echo ${{ github.ref }}
   test:
     needs: [ build ]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ env.ENVIRONMENT }}
-  test:
+      - name: Echo variables
+        run: echo ${{ env.ENVIRONMENT }}
+  deploy:
     needs: [ build, test ]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ env.ENVIRONMENT }}
+      - name: Echo variables
+        run: echo ${{ env.ENVIRONMENT }}
