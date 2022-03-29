@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo variables
-        if: $ {{ env.PRODUCTION_BUILD }}
+        if: ${{ env.PRODUCTION_BUILD }}
         run: |
           echo "This is a production build"
           echo ${{ env.ENVIRONMENT }}
