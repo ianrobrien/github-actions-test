@@ -28,9 +28,9 @@ jobs:
   deploy:
     needs: [ build, test ]
     runs-on: ubuntu-latest
+    if: ${{ env.PRODUCTION_BUILD == true }}
     steps:
       - name: Echo variables
-        if: ${{ env.PRODUCTION_BUILD }}
         run: |
           echo ${{ env.PRODUCTION_BUILD }}
           echo "This is a production build"
