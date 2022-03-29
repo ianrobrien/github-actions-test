@@ -1,7 +1,12 @@
-on: [push]
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "prod-*"
 
 env:
-  ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'PRODUCTION' || 'STAGING' }}
+  ENVIRONMENT: ${{ startsWith(github.ref, 'refs/tags/prod') && 'PRODUCTION' || 'STAGING' }}
 
 jobs:
   build:
